@@ -1,0 +1,435 @@
+2025-04-26 14:31:46,336 - __main__ - INFO - Initializing Cricket Scraper Application
+2025-04-26 14:31:46,379 - __main__ - INFO - Starting Cricket Scraper Application
+2025-04-26 14:31:46,379 - scraper.scheduler - INFO - Initializing scheduler
+2025-04-26 14:31:46,380 - WDM - INFO - ====== WebDriver manager ======
+2025-04-26 14:31:47,954 - WDM - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-26 14:31:48,902 - WDM - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-26 14:31:49,377 - WDM - INFO - There is no [win64] chromedriver "135.0.7049.114" for browser google-chrome "135.0.7049" in cache
+2025-04-26 14:31:49,410 - WDM - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-26 14:31:50,493 - WDM - INFO - WebDriver version 135.0.7049.114 selected
+2025-04-26 14:31:50,499 - WDM - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.114/win32/chromedriver-win32.zip
+2025-04-26 14:31:50,499 - WDM - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.114/win32/chromedriver-win32.zip
+2025-04-26 14:31:51,008 - WDM - INFO - Driver downloading response is 200
+2025-04-26 14:31:53,263 - WDM - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-26 14:31:55,304 - WDM - INFO - Driver has been saved in cache [C:\Users\Sarthak Tayal\.wdm\drivers\chromedriver\win64\135.0.7049.114]
+2025-04-26 14:31:57,546 - scraper.scheduler - INFO - Scheduler initialized successfully
+2025-04-26 14:31:57,550 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-26 14:31:57,551 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-26 14:31:57,603 - apscheduler.scheduler - INFO - Added job "MatchScheduler.update_match_list" to job store "default"
+2025-04-26 14:31:57,604 - apscheduler.scheduler - INFO - Added job "MatchScheduler.check_match_status" to job store "default"
+2025-04-26 14:31:57,604 - apscheduler.scheduler - INFO - Scheduler started
+2025-04-26 14:31:57,606 - scraper.scheduler - INFO - Updating match list
+2025-04-26 14:32:40,693 - scraper.scheduler - ERROR - Failed to update match list: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+Traceback (most recent call last):
+  File "c:\Users\Sarthak Tayal\PycharmProjects\pythonProject2\cricinfo\scraper\scheduler.py", line 64, in update_match_list
+    self.driver.get("https://crex.live/fixtures/match-list")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 454, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+
+2025-04-26 14:32:40,703 - __main__ - INFO - Cricket Scraper Application started successfully
+2025-04-26 14:32:57,555 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:32:57 IST)" (scheduled at 2025-04-26 14:32:57.551132+05:30)
+2025-04-26 14:32:57,556 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:32:57 IST)" executed successfully
+2025-04-26 14:33:57,555 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:34:57 IST)" (scheduled at 2025-04-26 14:33:57.551132+05:30)
+2025-04-26 14:33:57,555 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:34:57 IST)" executed successfully
+2025-04-26 14:34:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:35:57 IST)" (scheduled at 2025-04-26 14:34:57.551132+05:30)
+2025-04-26 14:34:57,558 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:35:57 IST)" executed successfully
+2025-04-26 14:35:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:36:57 IST)" (scheduled at 2025-04-26 14:35:57.551132+05:30)
+2025-04-26 14:35:57,558 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:36:57 IST)" executed successfully
+2025-04-26 14:36:57,560 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:37:57 IST)" (scheduled at 2025-04-26 14:36:57.551132+05:30)
+2025-04-26 14:36:57,561 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:37:57 IST)" executed successfully
+2025-04-26 14:37:57,554 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:38:57 IST)" (scheduled at 2025-04-26 14:37:57.551132+05:30)
+2025-04-26 14:37:57,554 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:38:57 IST)" executed successfully
+2025-04-26 14:38:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:39:57 IST)" (scheduled at 2025-04-26 14:38:57.551132+05:30)
+2025-04-26 14:38:57,561 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:39:57 IST)" executed successfully
+2025-04-26 14:39:57,600 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:40:57 IST)" (scheduled at 2025-04-26 14:39:57.551132+05:30)
+2025-04-26 14:39:57,602 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:40:57 IST)" executed successfully
+2025-04-26 14:40:57,613 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:41:57 IST)" (scheduled at 2025-04-26 14:40:57.551132+05:30)
+2025-04-26 14:40:57,616 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:41:57 IST)" executed successfully
+2025-04-26 14:41:57,567 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:42:57 IST)" (scheduled at 2025-04-26 14:41:57.551132+05:30)
+2025-04-26 14:41:57,569 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:42:57 IST)" executed successfully
+2025-04-26 14:42:57,569 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:43:57 IST)" (scheduled at 2025-04-26 14:42:57.551132+05:30)
+2025-04-26 14:42:57,570 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:43:57 IST)" executed successfully
+2025-04-26 14:43:57,608 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:43:57 IST)" (scheduled at 2025-04-26 14:43:57.551132+05:30)
+2025-04-26 14:43:57,609 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:44:57 IST)" executed successfully
+2025-04-26 14:44:57,560 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:45:57 IST)" (scheduled at 2025-04-26 14:44:57.551132+05:30)
+2025-04-26 14:44:57,562 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:45:57 IST)" executed successfully
+2025-04-26 14:45:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:46:57 IST)" (scheduled at 2025-04-26 14:45:57.551132+05:30)
+2025-04-26 14:45:57,557 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:46:57 IST)" executed successfully
+2025-04-26 14:46:57,604 - apscheduler.executors.default - INFO - Running job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:01:57 IST)" (scheduled at 2025-04-26 14:46:57.550099+05:30)
+2025-04-26 14:46:57,606 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:46:57 IST)" (scheduled at 2025-04-26 14:46:57.551132+05:30)
+2025-04-26 14:46:57,610 - scraper.scheduler - INFO - Updating match list
+2025-04-26 14:46:57,612 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:47:57 IST)" executed successfully
+2025-04-26 14:47:41,203 - scraper.scheduler - ERROR - Failed to update match list: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+Traceback (most recent call last):
+  File "c:\Users\Sarthak Tayal\PycharmProjects\pythonProject2\cricinfo\scraper\scheduler.py", line 64, in update_match_list
+    self.driver.get("https://crex.live/fixtures/match-list")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 454, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+
+2025-04-26 14:47:41,214 - apscheduler.executors.default - INFO - Job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:01:57 IST)" executed successfully
+2025-04-26 14:47:57,556 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:48:57 IST)" (scheduled at 2025-04-26 14:47:57.551132+05:30)
+2025-04-26 14:47:57,557 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:48:57 IST)" executed successfully
+2025-04-26 14:48:57,605 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:48:57 IST)" (scheduled at 2025-04-26 14:48:57.551132+05:30)
+2025-04-26 14:48:57,607 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:48:57 IST)" executed successfully
+2025-04-26 14:49:57,567 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:50:57 IST)" (scheduled at 2025-04-26 14:49:57.551132+05:30)
+2025-04-26 14:49:57,612 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:50:57 IST)" executed successfully
+2025-04-26 14:50:57,564 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:51:57 IST)" (scheduled at 2025-04-26 14:50:57.551132+05:30)
+2025-04-26 14:50:57,565 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:51:57 IST)" executed successfully
+2025-04-26 14:51:57,562 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:52:57 IST)" (scheduled at 2025-04-26 14:51:57.551132+05:30)
+2025-04-26 14:51:57,562 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:52:57 IST)" executed successfully
+2025-04-26 14:52:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:53:57 IST)" (scheduled at 2025-04-26 14:52:57.551132+05:30)
+2025-04-26 14:52:57,558 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:53:57 IST)" executed successfully
+2025-04-26 14:53:57,562 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:54:57 IST)" (scheduled at 2025-04-26 14:53:57.551132+05:30)
+2025-04-26 14:53:57,562 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:54:57 IST)" executed successfully
+2025-04-26 14:54:57,566 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:55:57 IST)" (scheduled at 2025-04-26 14:54:57.551132+05:30)
+2025-04-26 14:54:57,567 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:55:57 IST)" executed successfully
+2025-04-26 14:55:57,565 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:56:57 IST)" (scheduled at 2025-04-26 14:55:57.551132+05:30)
+2025-04-26 14:55:57,565 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:56:57 IST)" executed successfully
+2025-04-26 14:56:57,604 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:57:57 IST)" (scheduled at 2025-04-26 14:56:57.551132+05:30)
+2025-04-26 14:56:57,606 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:57:57 IST)" executed successfully
+2025-04-26 14:57:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:58:57 IST)" (scheduled at 2025-04-26 14:57:57.551132+05:30)
+2025-04-26 14:57:57,558 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:58:57 IST)" executed successfully
+2025-04-26 14:58:57,565 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:59:57 IST)" (scheduled at 2025-04-26 14:58:57.551132+05:30)
+2025-04-26 14:58:57,565 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 14:59:57 IST)" executed successfully
+2025-04-26 14:59:57,552 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:00:57 IST)" (scheduled at 2025-04-26 14:59:57.551132+05:30)
+2025-04-26 14:59:57,554 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:00:57 IST)" executed successfully
+2025-04-26 15:00:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:01:57 IST)" (scheduled at 2025-04-26 15:00:57.551132+05:30)
+2025-04-26 15:00:57,557 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:01:57 IST)" executed successfully
+2025-04-26 15:01:57,552 - apscheduler.executors.default - INFO - Running job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:16:57 IST)" (scheduled at 2025-04-26 15:01:57.550099+05:30)
+2025-04-26 15:01:57,598 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:02:57 IST)" (scheduled at 2025-04-26 15:01:57.551132+05:30)
+2025-04-26 15:01:57,599 - scraper.scheduler - INFO - Updating match list
+2025-04-26 15:01:57,600 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:02:57 IST)" executed successfully
+2025-04-26 15:02:40,388 - scraper.scheduler - ERROR - Failed to update match list: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+Traceback (most recent call last):
+  File "c:\Users\Sarthak Tayal\PycharmProjects\pythonProject2\cricinfo\scraper\scheduler.py", line 64, in update_match_list
+    self.driver.get("https://crex.live/fixtures/match-list")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 454, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+
+2025-04-26 15:02:40,395 - apscheduler.executors.default - INFO - Job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:16:57 IST)" executed successfully
+2025-04-26 15:02:57,559 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:03:57 IST)" (scheduled at 2025-04-26 15:02:57.551132+05:30)
+2025-04-26 15:02:57,560 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:03:57 IST)" executed successfully
+2025-04-26 15:03:57,554 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:04:57 IST)" (scheduled at 2025-04-26 15:03:57.551132+05:30)
+2025-04-26 15:03:57,554 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:04:57 IST)" executed successfully
+2025-04-26 15:04:57,565 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:05:57 IST)" (scheduled at 2025-04-26 15:04:57.551132+05:30)
+2025-04-26 15:04:57,566 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:05:57 IST)" executed successfully
+2025-04-26 15:05:57,568 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:06:57 IST)" (scheduled at 2025-04-26 15:05:57.551132+05:30)
+2025-04-26 15:05:57,569 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:06:57 IST)" executed successfully
+2025-04-26 15:06:57,565 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:07:57 IST)" (scheduled at 2025-04-26 15:06:57.551132+05:30)
+2025-04-26 15:06:57,566 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:07:57 IST)" executed successfully
+2025-04-26 15:07:57,552 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:08:57 IST)" (scheduled at 2025-04-26 15:07:57.551132+05:30)
+2025-04-26 15:07:57,553 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:08:57 IST)" executed successfully
+2025-04-26 15:08:57,560 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:09:57 IST)" (scheduled at 2025-04-26 15:08:57.551132+05:30)
+2025-04-26 15:08:57,561 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:09:57 IST)" executed successfully
+2025-04-26 15:09:57,556 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:10:57 IST)" (scheduled at 2025-04-26 15:09:57.551132+05:30)
+2025-04-26 15:09:57,557 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:10:57 IST)" executed successfully
+2025-04-26 15:10:57,559 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:11:57 IST)" (scheduled at 2025-04-26 15:10:57.551132+05:30)
+2025-04-26 15:10:57,560 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:11:57 IST)" executed successfully
+2025-04-26 15:11:57,564 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:12:57 IST)" (scheduled at 2025-04-26 15:11:57.551132+05:30)
+2025-04-26 15:11:57,564 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:12:57 IST)" executed successfully
+2025-04-26 15:12:57,552 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:13:57 IST)" (scheduled at 2025-04-26 15:12:57.551132+05:30)
+2025-04-26 15:12:57,552 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:13:57 IST)" executed successfully
+2025-04-26 15:13:57,558 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:14:57 IST)" (scheduled at 2025-04-26 15:13:57.551132+05:30)
+2025-04-26 15:13:57,559 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:14:57 IST)" executed successfully
+2025-04-26 15:14:57,572 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:15:57 IST)" (scheduled at 2025-04-26 15:14:57.551132+05:30)
+2025-04-26 15:14:57,573 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:15:57 IST)" executed successfully
+2025-04-26 15:15:57,599 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:16:57 IST)" (scheduled at 2025-04-26 15:15:57.551132+05:30)
+2025-04-26 15:15:57,602 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:16:57 IST)" executed successfully
+2025-04-26 15:16:57,597 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:16:57 IST)" (scheduled at 2025-04-26 15:16:57.551132+05:30)
+2025-04-26 15:16:57,599 - apscheduler.executors.default - INFO - Running job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:31:57 IST)" (scheduled at 2025-04-26 15:16:57.550099+05:30)
+2025-04-26 15:16:57,601 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:17:57 IST)" executed successfully
+2025-04-26 15:16:57,602 - scraper.scheduler - INFO - Updating match list
+2025-04-26 15:17:40,619 - scraper.scheduler - ERROR - Failed to update match list: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+Traceback (most recent call last):
+  File "c:\Users\Sarthak Tayal\PycharmProjects\pythonProject2\cricinfo\scraper\scheduler.py", line 64, in update_match_list
+    self.driver.get("https://crex.live/fixtures/match-list")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 454, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+	GetHandleVerifier [0x00DFD363+60275]
+	GetHandleVerifier [0x00DFD3A4+60340]
+	(No symbol) [0x00C306F3]
+	(No symbol) [0x00C2DB50]
+	(No symbol) [0x00C214A8]
+	(No symbol) [0x00C22D90]
+	(No symbol) [0x00C21738]
+	(No symbol) [0x00C21293]
+	(No symbol) [0x00C20FA1]
+	(No symbol) [0x00C1EF80]
+	(No symbol) [0x00C1F91B]
+	(No symbol) [0x00C3407E]
+	(No symbol) [0x00CBF2F7]
+	(No symbol) [0x00C9D08C]
+	(No symbol) [0x00CBE6EB]
+	(No symbol) [0x00C9CE86]
+	(No symbol) [0x00C6C623]
+	(No symbol) [0x00C6D474]
+	GetHandleVerifier [0x01048FE3+2467827]
+	GetHandleVerifier [0x010445E6+2448886]
+	GetHandleVerifier [0x0105F80C+2560028]
+	GetHandleVerifier [0x00E13DF5+153093]
+	GetHandleVerifier [0x00E1A3BD+179149]
+	GetHandleVerifier [0x00E04BB8+91080]
+	GetHandleVerifier [0x00E04D60+91504]
+	GetHandleVerifier [0x00DEFA10+4640]
+	BaseThreadInitThunk [0x76B25749+25]
+	RtlGetAppContainerNamedObjectPath [0x77D6A0D0+288]
+	RtlGetAppContainerNamedObjectPath [0x77D6A09E+238]
+
+2025-04-26 15:17:40,622 - apscheduler.executors.default - INFO - Job "MatchScheduler.update_match_list (trigger: interval[0:15:00], next run at: 2025-04-26 15:31:57 IST)" executed successfully
+2025-04-26 15:17:57,601 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:17:57 IST)" (scheduled at 2025-04-26 15:17:57.551132+05:30)
+2025-04-26 15:17:57,603 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:17:57 IST)" executed successfully
+2025-04-26 15:18:57,596 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:19:57 IST)" (scheduled at 2025-04-26 15:18:57.551132+05:30)
+2025-04-26 15:18:57,596 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:19:57 IST)" executed successfully
+2025-04-26 15:19:57,557 - apscheduler.executors.default - INFO - Running job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:20:57 IST)" (scheduled at 2025-04-26 15:19:57.551132+05:30)
+2025-04-26 15:19:57,558 - apscheduler.executors.default - INFO - Job "MatchScheduler.check_match_status (trigger: interval[0:01:00], next run at: 2025-04-26 15:20:57 IST)" executed successfully
