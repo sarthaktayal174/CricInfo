@@ -114,6 +114,9 @@ python main.py
 4. Push to the branch
 5. Create a Pull Request
 
+### Video explanation link
+`https://drive.google.com/file/d/1kjquyYYeLJAOe3qSP0UOScl_jJmnbAFb/view?usp=sharing`
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
