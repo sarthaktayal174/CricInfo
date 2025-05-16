@@ -77,55 +77,57 @@ class MatchScraper:
             else:
                 raise
     
+    def _click_tab_by_text(self, tab_text: str, wait_selector: str = None):
+        """Click a tab by its visible text and wait for content to load."""
+        try:
+            # Find all tab elements (li or div with role="tab" or similar)
+            tabs = self.driver.find_elements(By.XPATH, "//li[contains(@class, 'tab') or contains(@class, 'nav-item') or contains(@class, 'MuiTab-root') or contains(@class, 'tab-item') or contains(@class, 'tab-link') or contains(@class, 'nav-link') or contains(@class, 'tab')] | //div[contains(@class, 'tab') or contains(@class, 'nav-item') or contains(@class, 'MuiTab-root') or contains(@class, 'tab-item') or contains(@class, 'tab-link') or contains(@class, 'nav-link') or contains(@class, 'tab')]")
+            for tab in tabs:
+                if tab_text.lower() in tab.text.lower() and 'active' not in tab.get_attribute('class'):
+                    tab.click()
+                    if wait_selector:
+                        WebDriverWait(self.driver, 10).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, wait_selector))
+                        )
+                    time.sleep(1)
+                    return True
+            return False
+        except Exception as e:
+            logger.warning(f"Could not click tab '{tab_text}': {e}")
+            return False
+
     def scrape_match_info(self):
         """Scrape match information"""
         try:
             logger.info(f"Scraping match info for {self.match_id}")
-            
-            # Click on the "Match Info" tab if not already active
-            match_info_tab = self.driver.find_elements(By.CSS_SELECTOR, ".tab-match-info:not(.active)")
-            if match_info_tab:
-                match_info_tab[0].click()
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, ".match-info-container"))
-                )
-            
+            self._click_tab_by_text("Info", wait_selector="[class*='info']")
             # Extract match information using JavaScript
             match_info = self.driver.execute_script("""
-                const infoContainer = document.querySelector(".match-info-container");
+                // Try to find a container with info in the class name
+                const infoContainer = document.querySelector('[class*="info"]');
                 if (!infoContainer) return null;
-                
+                // Try to extract key info generically
+                const getText = sel => document.querySelector(sel)?.textContent?.trim() || '';
                 return {
                     teams: {
-                        home: {
-                            name: document.querySelector(".team-home .team-name")?.textContent?.trim() || "",
-                            shortName: document.querySelector(".team-home .team-short-name")?.textContent?.trim() || ""
-                        },
-                        away: {
-                            name: document.querySelector(".team-away .team-name")?.textContent?.trim() || "",
-                            shortName: document.querySelector(".team-away .team-short-name")?.textContent?.trim() || ""
-                        }
+                        home: getText('.team-home, .teamA, .team1, .team-left'),
+                        away: getText('.team-away, .teamB, .team2, .team-right')
                     },
                     matchDetails: {
-                        series: document.querySelector(".series-name")?.textContent?.trim() || "",
-                        format: document.querySelector(".match-format")?.textContent?.trim() || "",
-                        venue: document.querySelector(".venue-name")?.textContent?.trim() || "",
-                        date: document.querySelector(".match-date")?.textContent?.trim() || "",
-                        time: document.querySelector(".match-time")?.textContent?.trim() || "",
-                        toss: document.querySelector(".toss-result")?.textContent?.trim() || "",
-                        umpires: Array.from(document.querySelectorAll(".umpire")).map(el => el.textContent?.trim() || "")
+                        series: getText('.series-name, .series'),
+                        format: getText('.match-format, .format'),
+                        venue: getText('.venue-name, .venue'),
+                        date: getText('.match-date, .date'),
+                        time: getText('.match-time, .time'),
+                        toss: getText('.toss-result, .toss'),
+                        umpires: Array.from(document.querySelectorAll('.umpire, .umpires')).map(el => el.textContent?.trim() || "")
                     }
                 };
             """)
-            
             if not match_info:
                 raise Exception("Failed to extract match information")
-            
-            # Store match info in data store
             self.data_store.store_match_info(self.match_id, match_info)
-            
             logger.info(f"Successfully scraped match info for {self.match_id}")
-            
         except Exception as e:
             logger.error(f"Error scraping match info for {self.match_id}: {str(e)}", exc_info=True)
             raise
@@ -134,53 +136,37 @@ class MatchScraper:
         """Scrape team squads"""
         try:
             logger.info(f"Scraping squads for {self.match_id}")
-            
-            # Click on the "Squads" tab
-            squads_tab = self.driver.find_elements(By.CSS_SELECTOR, ".tab-squads:not(.active)")
-            if squads_tab:
-                squads_tab[0].click()
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, ".squads-container"))
-                )
-            
-            # Extract squads information using JavaScript
+            self._click_tab_by_text("Squad", wait_selector="[class*='squad']")
             squads = self.driver.execute_script("""
-                const squadsContainer = document.querySelector(".squads-container");
+                const squadsContainer = document.querySelector('[class*="squad"]');
                 if (!squadsContainer) return null;
-                
                 // Function to extract players from a team container
                 const extractPlayers = (teamSelector) => {
-                    const players = document.querySelectorAll(`${teamSelector} .player`);
+                    const players = squadsContainer.querySelectorAll(`${teamSelector} .player, ${teamSelector} .player-row, ${teamSelector} .player-item`);
                     return Array.from(players).map(player => {
                         return {
-                            name: player.querySelector(".player-name")?.textContent?.trim() || "",
+                            name: player.querySelector(".player-name")?.textContent?.trim() || player.textContent?.trim() || "",
                             role: player.querySelector(".player-role")?.textContent?.trim() || "",
-                            isCaptain: !!player.querySelector(".captain-indicator"),
-                            isWicketkeeper: !!player.querySelector(".wicketkeeper-indicator")
+                            isCaptain: !!player.querySelector(".captain-indicator, .captain"),
+                            isWicketkeeper: !!player.querySelector(".wicketkeeper-indicator, .wicketkeeper")
                         };
                     });
                 };
-                
                 return {
                     homeTeam: {
-                        name: document.querySelector(".home-team-name")?.textContent?.trim() || "",
-                        players: extractPlayers(".home-team-squad")
+                        name: squadsContainer.querySelector(".home-team-name, .teamA, .team1, .team-left")?.textContent?.trim() || "",
+                        players: extractPlayers(".home-team-squad, .teamA, .team1, .team-left")
                     },
                     awayTeam: {
-                        name: document.querySelector(".away-team-name")?.textContent?.trim() || "",
-                        players: extractPlayers(".away-team-squad")
+                        name: squadsContainer.querySelector(".away-team-name, .teamB, .team2, .team-right")?.textContent?.trim() || "",
+                        players: extractPlayers(".away-team-squad, .teamB, .team2, .team-right")
                     }
                 };
             """)
-            
             if not squads:
                 raise Exception("Failed to extract squads information")
-            
-            # Store squads in data store
             self.data_store.store_squads(self.match_id, squads)
-            
             logger.info(f"Successfully scraped squads for {self.match_id}")
-            
         except Exception as e:
             logger.error(f"Error scraping squads for {self.match_id}: {str(e)}", exc_info=True)
             raise
@@ -235,52 +221,41 @@ class MatchScraper:
         
         try:
             logger.info(f"Scraping live data for {self.match_id}")
-            
-            # Click on the "Live" tab
-            live_tab = self.driver.find_elements(By.CSS_SELECTOR, ".tab-live:not(.active)")
-            if live_tab:
-                live_tab[0].click()
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, ".live-container"))
-                )
-            
-            # Extract live data using JavaScript
+            self._click_tab_by_text("Live", wait_selector="[class*='live']")
             live_data = self.driver.execute_script("""
-                const liveContainer = document.querySelector(".live-container");
+                const liveContainer = document.querySelector('[class*="live"]');
                 if (!liveContainer) return null;
-                
+                const getText = sel => liveContainer.querySelector(sel)?.textContent?.trim() || '';
                 return {
-                    currentInnings: document.querySelector(".current-innings")?.textContent?.trim() || "",
-                    score: document.querySelector(".current-score")?.textContent?.trim() || "",
-                    runRate: document.querySelector(".run-rate")?.textContent?.trim() || "",
-                    requiredRunRate: document.querySelector(".required-run-rate")?.textContent?.trim() || "",
-                    lastWicket: document.querySelector(".last-wicket")?.textContent?.trim() || "",
-                    recentBalls: Array.from(document.querySelectorAll(".recent-ball")).map(el => el.textContent?.trim() || ""),
-                    partnership: document.querySelector(".current-partnership")?.textContent?.trim() || "",
-                    batsmen: Array.from(document.querySelectorAll(".batsman")).map(el => ({
-                        name: el.querySelector(".batsman-name")?.textContent?.trim() || "",
-                        runs: el.querySelector(".batsman-runs")?.textContent?.trim() || "",
-                        balls: el.querySelector(".batsman-balls")?.textContent?.trim() || "",
-                        fours: el.querySelector(".batsman-fours")?.textContent?.trim() || "",
-                        sixes: el.querySelector(".batsman-sixes")?.textContent?.trim() || "",
-                        strikeRate: el.querySelector(".batsman-strike-rate")?.textContent?.trim() || ""
+                    currentInnings: getText('.current-innings'),
+                    score: getText('.current-score, .score'),
+                    runRate: getText('.run-rate'),
+                    requiredRunRate: getText('.required-run-rate'),
+                    lastWicket: getText('.last-wicket'),
+                    recentBalls: Array.from(liveContainer.querySelectorAll('.recent-ball')).map(el => el.textContent?.trim() || ''),
+                    partnership: getText('.current-partnership'),
+                    batsmen: Array.from(liveContainer.querySelectorAll('.batsman, .batsman-row')).map(el => ({
+                        name: el.querySelector('.batsman-name')?.textContent?.trim() || el.textContent?.trim() || '',
+                        runs: el.querySelector('.batsman-runs')?.textContent?.trim() || '',
+                        balls: el.querySelector('.batsman-balls')?.textContent?.trim() || '',
+                        fours: el.querySelector('.batsman-fours')?.textContent?.trim() || '',
+                        sixes: el.querySelector('.batsman-sixes')?.textContent?.trim() || '',
+                        strikeRate: el.querySelector('.batsman-strike-rate')?.textContent?.trim() || ''
                     })),
-                    bowlers: Array.from(document.querySelectorAll(".bowler")).map(el => ({
-                        name: el.querySelector(".bowler-name")?.textContent?.trim() || "",
-                        overs: el.querySelector(".bowler-overs")?.textContent?.trim() || "",
-                        maidens: el.querySelector(".bowler-maidens")?.textContent?.trim() || "",
-                        runs: el.querySelector(".bowler-runs")?.textContent?.trim() || "",
-                        wickets: el.querySelector(".bowler-wickets")?.textContent?.trim() || "",
-                        economy: el.querySelector(".bowler-economy")?.textContent?.trim() || ""
+                    bowlers: Array.from(liveContainer.querySelectorAll('.bowler, .bowler-row')).map(el => ({
+                        name: el.querySelector('.bowler-name')?.textContent?.trim() || el.textContent?.trim() || '',
+                        overs: el.querySelector('.bowler-overs')?.textContent?.trim() || '',
+                        maidens: el.querySelector('.bowler-maidens')?.textContent?.trim() || '',
+                        runs: el.querySelector('.bowler-runs')?.textContent?.trim() || '',
+                        wickets: el.querySelector('.bowler-wickets')?.textContent?.trim() || '',
+                        economy: el.querySelector('.bowler-economy')?.textContent?.trim() || ''
                     })),
-                    matchStatus: document.querySelector(".match-status")?.textContent?.trim() || "",
-                    commentary: Array.from(document.querySelectorAll(".commentary-item"))
-                        .map(el => ({
-                            text: el.querySelector(".commentary-text")?.textContent?.trim() || "",
-                            over: el.querySelector(".commentary-over")?.textContent?.trim() || "",
-                            timestamp: el.querySelector(".commentary-timestamp")?.textContent?.trim() || ""
-                        }))
-                        .slice(0, 10) // Get only the last 10 commentary items
+                    matchStatus: getText('.match-status, .status'),
+                    commentary: Array.from(liveContainer.querySelectorAll('.commentary-item, .commentary-row')).map(el => ({
+                        text: el.querySelector('.commentary-text')?.textContent?.trim() || el.textContent?.trim() || '',
+                        over: el.querySelector('.commentary-over')?.textContent?.trim() || '',
+                        timestamp: el.querySelector('.commentary-timestamp')?.textContent?.trim() || ''
+                    })).slice(0, 10)
                 };
             """)
             
@@ -303,54 +278,40 @@ class MatchScraper:
         
         try:
             logger.info(f"Scraping scorecard for {self.match_id}")
-            
-            # Click on the "Scorecard" tab
-            scorecard_tab = self.driver.find_elements(By.CSS_SELECTOR, ".tab-scorecard:not(.active)")
-            if scorecard_tab:
-                scorecard_tab[0].click()
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, ".scorecard-container"))
-                )
-            
-            # Extract scorecard data using JavaScript
+            self._click_tab_by_text("Scorecard", wait_selector="[class*='scorecard']")
             scorecard = self.driver.execute_script("""
-                const scorecardContainer = document.querySelector(".scorecard-container");
+                const scorecardContainer = document.querySelector('[class*="scorecard"]');
                 if (!scorecardContainer) return null;
-                
-                // Function to extract innings data
                 const extractInnings = (inningsSelector) => {
-                    const inningsElement = document.querySelector(inningsSelector);
+                    const inningsElement = scorecardContainer.querySelector(inningsSelector);
                     if (!inningsElement) return null;
-                    
                     return {
-                        team: inningsElement.querySelector(".innings-team")?.textContent?.trim() || "",
-                        totalScore: inningsElement.querySelector(".innings-total")?.textContent?.trim() || "",
-                        overs: inningsElement.querySelector(".innings-overs")?.textContent?.trim() || "",
-                        extras: inningsElement.querySelector(".innings-extras")?.textContent?.trim() || "",
-                        batsmen: Array.from(inningsElement.querySelectorAll(".batsman-row")).map(row => ({
-                            name: row.querySelector(".batsman-name")?.textContent?.trim() || "",
-                            dismissal: row.querySelector(".batsman-dismissal")?.textContent?.trim() || "",
-                            runs: row.querySelector(".batsman-runs")?.textContent?.trim() || "",
-                            balls: row.querySelector(".batsman-balls")?.textContent?.trim() || "",
-                            fours: row.querySelector(".batsman-fours")?.textContent?.trim() || "",
-                            sixes: row.querySelector(".batsman-sixes")?.textContent?.trim() || "",
-                            strikeRate: row.querySelector(".batsman-strike-rate")?.textContent?.trim() || ""
+                        team: inningsElement.querySelector('.innings-team')?.textContent?.trim() || '',
+                        totalScore: inningsElement.querySelector('.innings-total')?.textContent?.trim() || '',
+                        overs: inningsElement.querySelector('.innings-overs')?.textContent?.trim() || '',
+                        extras: inningsElement.querySelector('.innings-extras')?.textContent?.trim() || '',
+                        batsmen: Array.from(inningsElement.querySelectorAll('.batsman-row')).map(row => ({
+                            name: row.querySelector('.batsman-name')?.textContent?.trim() || row.textContent?.trim() || '',
+                            dismissal: row.querySelector('.batsman-dismissal')?.textContent?.trim() || '',
+                            runs: row.querySelector('.batsman-runs')?.textContent?.trim() || '',
+                            balls: row.querySelector('.batsman-balls')?.textContent?.trim() || '',
+                            fours: row.querySelector('.batsman-fours')?.textContent?.trim() || '',
+                            sixes: row.querySelector('.batsman-sixes')?.textContent?.trim() || '',
+                            strikeRate: row.querySelector('.batsman-strike-rate')?.textContent?.trim() || ''
                         })),
-                        bowlers: Array.from(inningsElement.querySelectorAll(".bowler-row")).map(row => ({
-                            name: row.querySelector(".bowler-name")?.textContent?.trim() || "",
-                            overs: row.querySelector(".bowler-overs")?.textContent?.trim() || "",
-                            maidens: row.querySelector(".bowler-maidens")?.textContent?.trim() || "",
-                            runs: row.querySelector(".bowler-runs")?.textContent?.trim() || "",
-                            wickets: row.querySelector(".bowler-wickets")?.textContent?.trim() || "",
-                            economy: row.querySelector(".bowler-economy")?.textContent?.trim() || ""
+                        bowlers: Array.from(inningsElement.querySelectorAll('.bowler-row')).map(row => ({
+                            name: row.querySelector('.bowler-name')?.textContent?.trim() || row.textContent?.trim() || '',
+                            overs: row.querySelector('.bowler-overs')?.textContent?.trim() || '',
+                            maidens: row.querySelector('.bowler-maidens')?.textContent?.trim() || '',
+                            runs: row.querySelector('.bowler-runs')?.textContent?.trim() || '',
+                            wickets: row.querySelector('.bowler-wickets')?.textContent?.trim() || '',
+                            economy: row.querySelector('.bowler-economy')?.textContent?.trim() || ''
                         })),
-                        fallOfWickets: Array.from(inningsElement.querySelectorAll(".fow-item")).map(
-                            item => item.textContent?.trim() || ""
+                        fallOfWickets: Array.from(inningsElement.querySelectorAll('.fow-item')).map(
+                            item => item.textContent?.trim() || ''
                         )
                     };
                 };
-                
-                // Extract data for all innings (up to 4 for Test matches)
                 const innings = [];
                 for (let i = 1; i <= 4; i++) {
                     const inningsData = extractInnings(`.innings-${i}`);
@@ -358,11 +319,10 @@ class MatchScraper:
                         innings.push(inningsData);
                     }
                 }
-                
                 return {
                     innings,
-                    matchSummary: document.querySelector(".match-summary")?.textContent?.trim() || "",
-                    playerOfTheMatch: document.querySelector(".player-of-match")?.textContent?.trim() || ""
+                    matchSummary: scorecardContainer.querySelector('.match-summary')?.textContent?.trim() || '',
+                    playerOfTheMatch: scorecardContainer.querySelector('.player-of-match')?.textContent?.trim() || ''
                 };
             """)
             

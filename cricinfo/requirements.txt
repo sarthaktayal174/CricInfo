@@ -1,0 +1,5 @@
+pymongo
+selenium
+webdriver-manager
+apscheduler
+Flask 

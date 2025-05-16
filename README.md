@@ -4,10 +4,14 @@ CricInfo is a Python-based web scraper designed to extract cricket match data fr
 
 ## Features
 
-- Scrapes cricket match details, squads, live updates, and scorecards.
-- Stores data in JSON files for easy access and processing.
-- Handles retries and error logging for robust scraping.
-- Organized data storage for matches by match ID.
+- Live match tracking
+- Scorecard scraping
+- Team squads information
+- Match list updates
+- REST API endpoints
+- Automated scheduling
+- MongoDB data storage
+- Docker containerization
 
 ## Prerequisites
 
@@ -16,6 +20,9 @@ Before setting up the project, ensure you have the following installed:
 - Python (>= 3.8)
 - Google Chrome browser
 - ChromeDriver (compatible with your Chrome version)
+- Docker
+- Docker Compose
+- Git
 
 ## Setup Instructions
 
@@ -25,65 +32,87 @@ Before setting up the project, ensure you have the following installed:
    cd CricInfo
    ```
 
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Build and start the containers:
+```bash
+docker-compose up --build
+```
 
-3. Update `requirements.txt` if needed:
-   - Ensure the following libraries are included:
-     - `selenium`
-     - `webdriver-manager`
+3. To run in detached mode:
+```bash
+docker-compose up -d
+```
 
-4. Verify environment setup:
-   - Ensure ChromeDriver is installed and accessible in your `PATH`.
+4. To stop the application:
+```bash
+docker-compose down
+```
 
-## Usage
+## Project Structure
 
-### Running the Scraper
+```
+CricInfo/
+├── scraper/
+│   ├── match_scraper.py    # Match data scraping logic
+│   ├── data_store.py       # MongoDB data storage
+│   ├── scheduler.py        # Background task scheduling
+│   └── types.py           # Type definitions
+├── main.py                # Main application entry
+├── api.py                 # REST API endpoints
+├── requirements.txt       # Python dependencies
+├── Dockerfile            # Docker configuration
+├── docker-compose.yml    # Docker Compose configuration
+└── CHANGELOG.md          # Version history
+```
 
-1. Initialize the scraper:
-   ```bash
-   python -m scraper.match_scraper
-   ```
+## Configuration
 
-2. Scraper Configuration:
-   - Modify the `match_scraper.py` file to set the `match_url` and `match_id`.
+### Environment Variables
 
-3. Output:
-   - Data will be stored in the `./data` directory in structured JSON files:
-     - `info.json`: Match details
-     - `squads.json`: Team squads
-     - `live/latest.json`: Latest live updates
-     - `scorecard/latest.json`: Latest scorecard data
+- `MONGODB_URI`: MongoDB connection string (default: mongodb://mongodb:27017/)
+- `PYTHONUNBUFFERED`: Python output buffering (default: 1)
+- `DISPLAY`: X11 display for Chrome (default: :99)
 
-4. Logs:
-   - Check the `logs` directory for detailed logs of scraper activities.
+### Volumes
 
-### Debugging
+- `./logs`: Application logs
+- `mongodb_data`: MongoDB data persistence
 
-If the scraper encounters issues:
-- Check the logs for errors (e.g., data storage failures or website changes).
-- Ensure the website structure hasn't changed.
+## API Endpoints
+
+- `GET /matches`: List all matches
+- `GET /matches/<match_id>`: Get specific match details
+- `GET /matches/live`: Get live matches
+- `GET /matches/upcoming`: Get upcoming matches
+- `GET /matches/completed`: Get completed matches
+
+## Data Storage
+
+The application uses MongoDB to store:
+- Match lists
+- Live match data
+- Scorecards
+- Team squads
+- Match information
+
+## Development
+
+1. Install development dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+2. Run the application locally:
+```bash
+python main.py
+```
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add your commit message"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Open a pull request.
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
